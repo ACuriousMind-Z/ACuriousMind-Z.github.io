@@ -34,7 +34,7 @@ font: "Serif" # or "Sans Serif"
 
 plugins:
   - jekyll-sitemap
-
+url: "https://jxzhao.com"
 # The following files will be removed from the generated website.
 exclude:
   - Gemfile
