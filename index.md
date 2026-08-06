@@ -33,7 +33,8 @@ building envelopes.
 - Polymer/mineral composites for optical and thermal management
 - Shape-memory and adaptive polymer foams
 - Energy-efficient building envelopes
-- Machine learning and large language models for polymer processing research
+- Physics-informed machine learning for polymer processing
+- LLM-based automation in polymer processing research
 
 {% include_relative _includes/publications.md %}
 
