@@ -1,59 +1,58 @@
 main:
 
-# ---------- First-authored ----------
-
 - title: "Toughening mechanism in micro-layered polymer films revealed by in situ micro-tensile testing"
   authors: "<strong>Jianxiang Zhao</strong>, Abdullah Al Faysal, Jung Uk Lee, Tobin Filleter, Patrick C. Lee"
-  conference_short: ACS AMI
+  conference_short: "ACS AMI"
   conference: "ACS Applied Materials & Interfaces, 2026."
-  notes: Under review
+  notes: "Under review"
 
 - title: "Butterfly wing microstructure inspired solid/porous alternating layered structures: In situ visualization of confined foaming"
   authors: "<strong>Jianxiang Zhao</strong>, Lun Zhang, Jung Uk Lee, Nicole D. Sansone, Jaehyun Kim, Lara Bazbaz, Abdullah Al Faysal, Patrick C. Lee"
-  conference_short: Small
+  conference_short: "Small"
   conference: "Small, 2025, 21(40), e08472."
-  pdf: 
-  image: ./assets/img/teaser_small.png
 
 - title: "Micro-layered film and foam alternating structures: A novel passive daytime radiative cooling material"
   authors: "<strong>Jianxiang Zhao</strong>, Hanwei Li, Dongjoon Choi, Patrick C. Lee"
-  conference_short: Nano Energy
+  conference_short: "Nano Energy"
   conference: "Nano Energy, 2024, 127, 109695."
-  pdf: https://doi.org/10.1016/j.nanoen.2024.109695
-  image: ./assets/img/teaser_pdrc.png
+  pdf: "https://doi.org/10.1016/j.nanoen.2024.109695"
 
 - title: "Microwave foaming of polymers"
   authors: "<strong>Jianxiang Zhao</strong>, Shuang Zheng, Zheng Xu, Xingyuan Huang"
-  conference_short: J. Mater. Sci.
+  conference_short: "J. Mater. Sci."
   conference: "Journal of Materials Science, 2021, 56, 15491-15498."
-  pdf: 
 
 - title: "Solvent-free generation of foamed microcapillary films with a dual network of interconnected pores and internal channels"
   authors: "<strong>Jianxiang Zhao</strong>, Zheng Xu, Shuang Zheng, Chuntai Liu, Jiaming Liu, Hongsheng Pei"
-  conference_short: Macromol. Mater. Eng.
+  conference_short: "Macromol. Mater. Eng."
   conference: "Macromolecular Materials and Engineering, 2020, 305, 1900768."
-  pdf: 
-
-# ---------- Co-authored ----------
 
 - title: "Bio-inspired laser micro/nanostructuring of highly graphitic carbon enabling structural coloration and high-performance all-weather solar evaporator"
   authors: "Jung Uk Lee, Rafael Aguiar, Terry Y. T. Su, Kyung-Won Kim, <strong>Jianxiang Zhao</strong>, et al."
-  conference_short: Chem. Eng. J.
+  conference_short: "Chem. Eng. J."
   conference: "Chemical Engineering Journal, 2026, 174935."
-  pdf: 
 
 - title: "In situ UV laser-induced forward transfer of carbon nanosphere/graphene composites on siloxane-polyurethane substrates for human health monitoring"
   authors: "Jung Uk Lee, Rafael Aguiar, <strong>Jianxiang Zhao</strong>, et al."
-  conference_short: Adv. Compos. Hybrid Mater.
+  conference_short: "Adv. Compos. Hybrid Mater."
   conference: "Advanced Composites and Hybrid Materials, 2026."
-  pdf: 
 
 - title: "Nano-Layered Films and Foams"
   authors: "Terry Su, Abdullah Al Faysal, <strong>Jianxiang Zhao</strong>, Patrick C. Lee"
-  conference_short: Book Chapter
+  conference_short: "Book Chapter"
   conference: "In <em>Polyester Films: Materials, Processes and Applications</em>, pp. 225-276."
 
 - title: "Production of high aspect-ratio rectangular-lumen microtube by gas-assisted microextrusion"
   authors: "Lei Wang, Xingyuan Huang, <strong>Jianxiang Zhao</strong>, Chuntai Liu, Zheng Xu, Hongsheng Pei"
-  conference_short: J. Appl. Polym. Sci.
-  conference: "Journal of Applied Polymer Science,
+  conference_short: "J. Appl. Polym. Sci."
+  conference: "Journal of Applied Polymer Science, 2020, 49352."
+
+- title: "Fabrication and application of flexible rectangular microtubes"
+  authors: "Xingyuan Huang, Lei Wang, <strong>Jianxiang Zhao</strong>, Chuntai Liu, Feng Zhou, Zheng Xu, Hongsheng Pei"
+  conference_short: "Polym.-Plast. Technol. Mater."
+  conference: "Polymer-Plastics Technology and Materials, 2020, 59, 959-965."
+
+- title: "Numerical simulations of wall contact angle effects on droplet size during step emulsification"
+  authors: "Meng Wang, Chuidian Kong, Qi Liang, <strong>Jianxiang Zhao</strong>, Ming Wen, Zheng Xu, Xiaodong Ruan"
+  conference_short: "RSC Adv."
+  conference: "RSC Advances, 2018, 8, 33042-33047."
