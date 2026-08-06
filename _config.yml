@@ -2,7 +2,7 @@
 title: Jianxiang Zhao
 position: Postdoctoral fellow
 affiliation: University of Toronto
-email: jx.zhao (at) mail.utoronto.ca
+email: jx.zhao (at) mail.utoronto.ca &nbsp;|&nbsp; hello (at) jxzhao.com
 
 # Search Engine Optimization (SEO)
 # The following information is used to improve the website traffic from search engines, e.g., Google.
@@ -32,8 +32,6 @@ auto_dark_mode: true
 # Font
 font: "Serif" # or "Sans Serif"
 
-# Use this project as a remote theme for GitHub Pages
-remote_theme: yaoyao-liu/minimal-light
 
 # The following files will be removed from the generated website.
 exclude:
