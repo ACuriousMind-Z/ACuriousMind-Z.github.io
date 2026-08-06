@@ -2,8 +2,13 @@
 
 <h4 style="margin:0 10px 0;">Journal Reviewer</h4>
 <ul style="margin:0 0 20px;">
-  <li><a href="JOURNAL_URL"><autocolor>Journal Name</autocolor></a></li>
-  <li><a href="JOURNAL_URL"><autocolor>Journal Name</autocolor></a></li>
+  <li><a href="https://www.sciencedirect.com/journal/chemical-engineering-journal"><autocolor>Chemical Engineering Journal</autocolor></a></li>
+  <li><a href="https://link.springer.com/journal/40964"><autocolor>Progress in Additive Manufacturing</autocolor></a></li>
+  <li><a href="https://www.tandfonline.com/journals/lpte21"><autocolor>Polymer-Plastics Technology and Materials</autocolor></a></li>
+  <li><a href="https://www.mdpi.com/journal/polymers"><autocolor>Polymers</autocolor></a></li>
+  <li><a href="https://www.mdpi.com/journal/materials"><autocolor>Materials</autocolor></a></li>
+  <li><a href="https://www.mdpi.com/journal/sustainability"><autocolor>Sustainability</autocolor></a></li>
+  <li><a href="https://www.mdpi.com/journal/urbansci"><autocolor>Urban Science</autocolor></a></li>
 </ul>
 
 ## Conference Presentations
