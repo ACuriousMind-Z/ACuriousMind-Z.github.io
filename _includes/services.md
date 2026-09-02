@@ -1,28 +1,10 @@
 ## Services
 
 <h4 style="margin:0 10px 0;">Journal Reviewer</h4>
-<ul style="margin:0 0 20px;">
-  <li><a href="https://www.sciencedirect.com/journal/chemical-engineering-journal"><autocolor>Chemical Engineering Journal</autocolor></a></li>
-  <li><a href="https://link.springer.com/journal/40964"><autocolor>Progress in Additive Manufacturing</autocolor></a></li>
-  <li><a href="https://www.tandfonline.com/journals/lpte21"><autocolor>Polymer-Plastics Technology and Materials</autocolor></a></li>
-  <li><a href="https://www.mdpi.com/journal/polymers"><autocolor>Polymers</autocolor></a></li>
-  <li><a href="https://www.mdpi.com/journal/materials"><autocolor>Materials</autocolor></a></li>
-  <li><a href="https://www.mdpi.com/journal/sustainability"><autocolor>Sustainability</autocolor></a></li>
-  <li><a href="https://www.mdpi.com/journal/urbansci"><autocolor>Urban Science</autocolor></a></li>
-</ul>
-
-## Conference Presentations
-
-<ul style="margin:0 0 20px;">
-  <li><strong>ANTEC 2025</strong>, Society of Plastics Engineers, Philadelphia, PA, USA.<br>
-  <em>Bio-mimetic micro-/nano-layered foams: In situ visualization of cell nucleation and growth dynamics.</em></li>
-  <li><strong>ANTEC 2024</strong>, Society of Plastics Engineers, St. Louis, MO, USA.<br>
-  <em>Micro/nano-layered film/foam structures: A novel approach to passive cooling building materials.</em></li>
-  <li><strong>ANTEC 2023</strong>, Society of Plastics Engineers, Denver, CO, USA.<br>
-  <em>Micro/nano-layer structured foams with tunable foam morphology and properties.</em></li>
-  <li><strong>PPS-37</strong>, 37th International Conference of the Polymer Processing Society, Fukuoka, Japan, 2022.<br>
-  <em>High thermal insulation structures using micro-/nano-layered film/foam technology.</em></li>
-</ul>
+<p style="margin:0 0 20px;">20+ manuscripts reviewed, including for
+<a href="https://www.sciencedirect.com/journal/chemical-engineering-journal"><autocolor>Chemical Engineering Journal</autocolor></a>,
+<a href="https://link.springer.com/journal/40964"><autocolor>Progress in Additive Manufacturing</autocolor></a>, and
+<a href="https://www.tandfonline.com/journals/lpte21"><autocolor>Polymer-Plastics Technology and Materials</autocolor></a>.</p>
 
 ## Patents
 
