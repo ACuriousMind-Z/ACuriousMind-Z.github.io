@@ -9,11 +9,14 @@ Engineering at the University of Toronto, working in the
 [Microcellular Plastics Manufacturing Laboratory](https://mpml.mie.utoronto.ca/lab/)
 with Prof. Chul B. Park.
 
-My research develops porous polymer composites for passive daytime radiative
-cooling (PDRC). I use supercritical CO<sub>2</sub> batch foaming to control cellular
-architecture across the length scales that govern solar scattering and mid-infrared
-emission, with the goal of producing scalable, solvent-free cooling materials for
-building envelopes.
+My research develops multifunctional porous polymers in which structure is used as
+the functional element. Using supercritical CO<sub>2</sub> foaming, multilayer
+coextrusion, and laser-based micro/nanostructuring, I control cellular and layered
+architecture across the length scales that govern solar scattering, mid-infrared
+emission, heat transport, and mechanical response. Current work targets passive
+daytime radiative cooling (PDRC), shape-memory foams that adapt their insulation to
+ambient conditions, and solvent-free routes that scale to building envelope
+applications.
 
 ## Education
 
@@ -27,14 +30,36 @@ building envelopes.
 
 ## Research Interests
 
-- Polymer processing of micro- and nano-structured materials
+- Multifunctional polymeric materials and advanced manufacturing
+- Micro/nano-cellular and micro/nano-layered structures
 - Supercritical CO<sub>2</sub> foaming and cellular structure control
-- Passive daytime radiative cooling materials
+- Passive daytime radiative cooling and adaptive thermal management
 - Polymer/mineral composites for optical and thermal management
 - Shape-memory and adaptive polymer foams
 - Energy-efficient building envelopes
-- Physics-informed machine learning for polymer processing
+- Physics-constrained machine learning for polymer processing
 - LLM-based automation in polymer processing research
+
+## Technical Expertise
+
+<ul style="margin:0 0 20px;">
+  <li>Multilayer coextrusion of micro/nano-layered films, 17 to 500+ layers</li>
+  <li>Supercritical CO<sub>2</sub> foaming, including confined foaming in layered structures</li>
+  <li>In situ visualization of cell nucleation and growth under high-pressure CO<sub>2</sub></li>
+  <li>Solar reflectance and mid-infrared emissivity measurement (UV-Vis-NIR, FTIR) for radiative cooling</li>
+  <li>Thermal conductivity and steady-state insulation measurement</li>
+  <li>In situ micro-tensile testing of thin films</li>
+  <li>CO<sub>2</sub> and UV laser micro/nanostructuring, including laser-induced forward transfer</li>
+  <li>Porous microcapillary film extrusion and gas-assisted microextrusion</li>
+</ul>
+
+## Collaboration
+
+I am interested in collaborations on radiative cooling and adaptive thermal
+management materials, confined foaming and layered polymer processing, and
+scale-up of these structures toward building and textile applications. I am also
+open to work applying machine learning to foaming and processing data. Email is
+the best way to reach me.
 
 {% include_relative _includes/publications.md %}
 
