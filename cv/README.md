@@ -124,8 +124,35 @@ its DOI, push it to the PR branch, and merge.
 
 Conference presentations, patents, in-preparation manuscripts. Add a
 `manual.bib` entry plus an `overrides.yml` row keyed by its citation key. ORCID
-is free to also carry the item (see `orcid-import.bib`); `fetch_orcid.py` skips
-ORCID works with no DOI, so there is no duplication risk.
+is free to also carry the item (see below); `fetch_orcid.py` skips ORCID works
+with no DOI, so there is no duplication risk.
+
+## Runbook: importing the no-DOI works into ORCID
+
+`orcid-import.bib` exists for this. Upload it at orcid.org/my-orcid ->
+Works -> Add -> Import BibTeX. Afterwards, change the two patents from work
+type "Other" to "Patent" in the ORCID UI: `@patent` is not standard BibTeX and
+is not in ORCID's supported type list, so they are written as `@misc`, which
+imports reliably.
+
+Two things will make ORCID reject the file with
+`TypeError: Token mismatch: match`:
+
+- **An at-sign inside a `%` comment.** ORCID's BibTeX reader finds entries by
+  scanning for the at-sign and does not honour `%` comments, so `@misc` written
+  in a comment is parsed as the start of a malformed entry. This is what broke
+  the first version of the file.
+- **Unbalanced braces** in any field value.
+
+Validate before uploading, against the same parser ORCID uses:
+
+```sh
+npm install bibtex-parse-js
+node -e 'console.log(require("bibtex-parse-js").toJSON(require("fs").readFileSync("cv/orcid-import.bib","utf8")).length + " entries")'
+```
+
+Re-importing the file creates duplicates in ORCID. Import once, then edit in
+place.
 
 ## What is deliberately not synced
 

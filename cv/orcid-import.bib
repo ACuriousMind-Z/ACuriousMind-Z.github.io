@@ -1,30 +1,13 @@
 % orcid-import.bib -- NOT part of the build. Import-only helper.
 %
-% Upload this file at https://orcid.org/my-orcid -> Works -> Add -> Import
-% BibTeX, to register the conference papers and patents that have no DOI and
-% therefore cannot reach ORCID through Search & Link.
+% Upload at orcid.org/my-orcid -> Works -> Add -> Import BibTeX, to register
+% the conference papers and patents that have no DOI and so cannot reach
+% ORCID through Search and Link. See README.md for what to do after import.
 %
-% Safe to import: fetch_orcid.py only reads ORCID works that carry a DOI, so
-% these entries land in your ORCID record without changing publications.bib,
-% publications.tex, or the site. They stay sourced from manual.bib.
-%
-% Notes on ORCID's importer:
-%   - @inproceedings maps to work type "Conference paper".
-%   - The patents below use @misc, not @patent: @patent is not standard
-%     BibTeX and is not in ORCID's supported type list, so it risks being
-%     dropped on import. @misc imports reliably as work type "Other" --
-%     change those two entries to "Patent" in the ORCID UI afterwards.
-%   - ORCID stores only year granularity for these, so the full conference
-%     dates in `note` are informational.
-%   - Re-importing the same file creates duplicates in ORCID. Import once,
-%     then edit in place.
-%
-% Keep this file in sync with the corresponding manual.bib entries; the
-% citation keys match deliberately.
-
-% ---------------------------------------------------------------------------
-% Conference papers
-% ---------------------------------------------------------------------------
+% WARNING: ORCID's BibTeX reader locates entries by scanning for the at-sign
+% and does not honour these percent comments, so an at-sign anywhere above
+% is read as the start of an entry and the upload fails with
+% "TypeError: Token mismatch". Keep comments in this file at-sign free.
 
 @inproceedings{zhao2025antec,
   author    = {Zhao, Jianxiang and Lee, Patrick C.},
@@ -32,7 +15,7 @@
   booktitle = {Society of Plastics Engineers, ANTEC 2025},
   year      = {2025},
   address   = {Philadelphia, PA, USA},
-  note      = {Mar 3--6, 2025}
+  note      = {Mar 3-6, 2025}
 }
 
 @inproceedings{faysal2025ppsamericas,
@@ -49,7 +32,7 @@
   booktitle = {Society of Plastics Engineers, ANTEC 2024},
   year      = {2024},
   address   = {St. Louis, MO, USA},
-  note      = {Mar 4--7, 2024}
+  note      = {Mar 4-7, 2024}
 }
 
 @inproceedings{zhao2023antec,
@@ -58,7 +41,7 @@
   booktitle = {Society of Plastics Engineers, ANTEC 2023},
   year      = {2023},
   address   = {Denver, CO, USA},
-  note      = {Mar 27--30, 2023}
+  note      = {Mar 27-30, 2023}
 }
 
 @inproceedings{zhao2022pps37,
@@ -67,25 +50,19 @@
   booktitle = {37th International Conference of the Polymer Processing Society (PPS-37)},
   year      = {2022},
   address   = {Fukuoka, Japan},
-  note      = {Apr 11--15, 2022}
+  note      = {Apr 11-15, 2022}
 }
-
-% ---------------------------------------------------------------------------
-% Patents
-% ---------------------------------------------------------------------------
 
 @misc{zhaopatentcn110253856a,
   author       = {Zhao, Jianxiang},
   title        = {A movable-block variable-differentiation-cross section extrusion die for preparing micro-nano structures},
   year         = {2019},
-  howpublished = {China Patent CN110253856A},
-  note         = {Patent. Set the ORCID work type to "Patent" after import.}
+  howpublished = {China Patent CN110253856A}
 }
 
 @misc{zhaopatentpct2019096518,
   author       = {Zhao, Jianxiang},
   title        = {A method for generating foamed microcapillary films with a dual network of interconnected pores and internal channels},
   year         = {2019},
-  howpublished = {PCT Patent PCT/CN2019/096518},
-  note         = {Patent. Set the ORCID work type to "Patent" after import.}
+  howpublished = {PCT Patent PCT/CN2019/096518}
 }
