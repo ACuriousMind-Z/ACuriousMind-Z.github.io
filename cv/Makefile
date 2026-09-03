@@ -1,14 +1,17 @@
-.PHONY: all deps fetch render pdf clean distclean
+.PHONY: all deps fetch profile render pdf clean distclean
 
 PYTHON ?= python3
 
-all: fetch render pdf
+all: fetch profile render pdf
 
 deps:
 	$(PYTHON) -m pip install -r requirements.txt
 
 fetch:
 	$(PYTHON) scripts/fetch_orcid.py
+
+profile:
+	$(PYTHON) scripts/fetch_orcid_profile.py
 
 render:
 	$(PYTHON) scripts/render.py
