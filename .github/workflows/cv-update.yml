@@ -82,7 +82,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base texlive-latex-recommended \
-            texlive-latex-extra texlive-fonts-recommended latexmk
+            texlive-latex-extra texlive-fonts-recommended lmodern latexmk
 
       - name: Compile CV PDF
         run: make -C cv pdf
