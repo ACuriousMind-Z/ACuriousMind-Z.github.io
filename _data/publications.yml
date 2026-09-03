@@ -10,10 +10,10 @@ main:
   conference: "ACS Applied Materials & Interfaces, 2026."
   notes: "Under review"
 
-- title: "Butterfly wing microstructure inspired solid/porous alternating layered structures: In situ visualization of confined foaming"
+- title: "Butterfly Wing Microstructure Inspired Solid/Porous Alternating Layered Structures: In Situ Visualization of Confined Foaming"
   authors: "<strong>Jianxiang Zhao</strong>, Lei Zhang, Jun Uk Lee, Nello D. Sansone, Janet Kim, Leen Bazbaz, Abdullah Al Faysal, Patrick C. Lee"
   conference_short: "Small"
-  conference: "Small, 2025, 21(40), e08472."
+  conference: "Small, 2025, 21(40)."
   doi: "https://doi.org/10.1002/smll.202508472"
   pdf: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12508713/"
 
@@ -30,10 +30,10 @@ main:
   conference: "Journal of Materials Science, 2021, 56(27), 15491-15498."
   doi: "https://doi.org/10.1007/s10853-021-06259-5"
 
-- title: "Solvent-free generation of foamed microcapillary films with a dual network of interconnected pores and internal channels"
+- title: "Solvent‐Free Generation of Foamed Microcapillary Films with a Dual Network of Interconnected Pores and Internal Channels"
   authors: "<strong>Jianxiang Zhao</strong>, Zhongbin Xu, Suxia Zheng, Cong Liu, Junfeng Liu, Hao Pei"
   conference_short: "Macromol. Mater. Eng."
-  conference: "Macromolecular Materials and Engineering, 2020, 305(3), 1900768."
+  conference: "Macromolecular Materials and Engineering, 2020, 305(3)."
   doi: "https://doi.org/10.1002/mame.201900768"
 
 - title: "An automated image-processing framework for bubble tracking in multilayer polymer foams"
@@ -43,15 +43,15 @@ main:
   notes: "Under review"
 
 - title: "Bio-inspired laser micro/nanostructuring of highly graphitic carbon enabling structural coloration and high-performance all-weather solar evaporator"
-  authors: "Jun Uk Lee, Rafaela Aguiar, To Yu Troy Su, Keon-Woo Kim, <strong>Jianxiang Zhao</strong>, et al."
+  authors: "Jun Uk Lee, Rafaela Aguiar, To Yu Troy Su, Keon-Woo Kim, <strong>Jianxiang Zhao</strong>, Jinsu Kim, Yong-Won Ma, Kwangseuk Kyhm, Duyoung Choi, Bo-Sung Shin, Patrick C. Lee"
   conference_short: "Chem. Eng. J."
   conference: "Chemical Engineering Journal, 2026, 534, 174935."
   doi: "https://doi.org/10.1016/j.cej.2026.174935"
 
-- title: "In situ UV laser-induced forward transfer of carbon nanosphere/graphene composites on siloxane-polyurethane substrates for human health monitoring"
-  authors: "Jun Uk Lee, Rafaela Aguiar, <strong>Jianxiang Zhao</strong>, et al."
+- title: "In situ UV-laser-induced forward transfer of carbon nanosphere/graphene composites on siloxane-polyurethane substrates for human health monitoring"
+  authors: "Jun Uk Lee, Rafaela Aguiar, <strong>Jianxiang Zhao</strong>, Kwansoo Lee, Nello D. Sansone, Keon-Woo Kim, Taeyoung Lee, Yong-Won Ma, Duyoung Choi, Bo-Sung Shin, Patrick C. Lee"
   conference_short: "Adv. Compos. Hybrid Mater."
-  conference: "Advanced Composites and Hybrid Materials, 2026, 9, 181."
+  conference: "Advanced Composites and Hybrid Materials, 2026, 9(2)."
   doi: "https://doi.org/10.1007/s42114-026-01732-8"
 
 - title: "Layered foam/film polymer composite structure exhibiting high absorption-dominant electromagnetic interference (EMI) shielding properties"
@@ -65,7 +65,7 @@ main:
   conference: "Journal of Materials Chemistry A, 2024, 12(16), 9627-9636."
   doi: "https://doi.org/10.1039/d4ta00315b"
 
-- title: "The effect of coupling agents and graphene on the mechanical properties of film-based post-consumer recycled plastic"
+- title: "The Effect of Coupling Agents and Graphene on the Mechanical Properties of Film-Based Post-Consumer Recycled Plastic"
   authors: "Sungwoong Choi, <strong>Jianxiang Zhao</strong>, Patrick C. Lee, Duyoung Choi"
   conference_short: "Polymers"
   conference: "Polymers, 2024, 16(3), 380."
@@ -74,25 +74,27 @@ main:
 
 - title: "Nano-Layered Films and Foams"
   authors: "Troy Su, Abdullah Al Faysal, <strong>Jianxiang Zhao</strong>, Patrick C. Lee"
-  conference_short: "Book Chapter"
+  conference_short: "Polyester Films: Materials, Processes and Applications"
   conference: "Chapter in <em>Polyester Films: Materials, Processes and Applications</em>, Wiley, 1st ed., 2023, pp. 225--276. Chapter 6. ISBN 9781119535751."
+  doi: "https://doi.org/10.1002/9781119535775.ch6"
 
-- title: "Improved size uniformity of microcapillaries in microcapillary films by separate gas injection"
+- title: "Improved Size Uniformity of Microcapillaries in Microcapillary Films by Separate Gas Injection"
   authors: "Junfeng Liu, Cong Liu, <strong>Jianxiang Zhao</strong>, Mingcheng Bi, Zhongbin Xu, Xing Huang"
   conference_short: "Macromol. Mater. Eng."
-  conference: "Macromolecular Materials and Engineering, 2021, 306(12), 2100499."
+  conference: "Macromolecular Materials and Engineering, 2021, 306(12)."
   doi: "https://doi.org/10.1002/mame.202100499"
 
-- title: "Production of high aspect-ratio rectangular-lumen microtube by gas-assisted microextrusion"
+- title: "Production of high‐aspect‐ratio rectangular‐lumen microtube by gas‐assisted microextrusion"
   authors: "Lei Wang, Xing Huang, <strong>Jianxiang Zhao</strong>, Cong Liu, Zhongbin Xu, Hao Pei"
   conference_short: "J. Appl. Polym. Sci."
-  conference: "Journal of Applied Polymer Science, 2020, 137(44), 49352."
+  conference: "Journal of Applied Polymer Science, 2020, 137(44)."
   doi: "https://doi.org/10.1002/app.49352"
 
 - title: "Fabrication and application of flexible rectangular microtubes"
   authors: "Xing Huang, Lei Wang, <strong>Jianxiang Zhao</strong>, Cong Liu, Fanghao Zhou, Zhongbin Xu, Hao Pei"
-  conference_short: "Polym.-Plast. Technol. Mater."
+  conference_short: "Polymer-Plastics Technology and Materials"
   conference: "Polymer-Plastics Technology and Materials, 2020, 59(9), 959--965."
+  doi: "https://doi.org/10.1080/25740881.2019.1708104"
 
 - title: "Numerical simulations of wall contact angle effects on droplet size during step emulsification"
   authors: "Meng Wang, Chuang Kong, Qisen Liang, <strong>Jianxiang Zhao</strong>, Maolin Wen, Zhongbin Xu, Xiaodong Ruan"
