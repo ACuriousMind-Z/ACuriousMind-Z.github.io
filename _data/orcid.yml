@@ -2,5 +2,38 @@
 # Do not hand-edit. Source: the ORCID public API /person endpoint.
 # Edit the biography at https://orcid.org/my-orcid instead.
 
-biography: ''
+biography: 'I am a postdoctoral fellow in the Department of Mechanical and Industrial Engineering
+  at the University of Toronto, working in the Microcellular Plastics Manufacturing Laboratory
+  with Prof. Chul B. Park.
+
+
+  I work on porous polymers in which structure, not added chemistry, sets the function. Supercritical
+  CO₂ foaming, aerogel synthesis, multilayer coextrusion, and laser micro/nanostructuring
+  each fix pore and layer geometry on a different length scale, from tens of nanometers to
+  hundreds of micrometers. These are the scales that govern solar scattering, mid-infrared
+  emission, heat transport, and mechanical response.
+
+
+  Two directions define my current work.
+
+
+  Passive cooling and adaptive thermal management. I design foams, aerogels, and layered films
+  for passive daytime radiative cooling (PDRC), including shape-memory architectures whose
+  insulation and optical response change with ambient conditions. Our aerogels form a broad,
+  bimodal pore distribution. The two populations serve different functions: pores below the
+  mean free path of air suppress gas-phase conduction, while micron-scale pores scatter across
+  the solar band. This distribution currently emerges from the synthesis rather than being
+  set by it, so a central question in this work is which processing variables move the two
+  pore populations independently. The polymer backbone supplies mid-infrared emissivity, and
+  foaming and coextrusion carry these structures into mechanically robust, continuously processable
+  forms.
+
+
+  Physics-constrained machine learning for polymer processing. Foaming and drying datasets
+  are small and noisy, and each run is expensive, so purely data-driven models extrapolate
+  poorly. I constrain learned models with the governing physics of these processes: gas solubility
+  and diffusion, nucleation kinetics, pore growth, and melt rheology. The constraints reduce
+  unphysical predictions outside the sampled process window. Two near-term targets follow:
+  inverse design of pore architecture from a specified optical or thermal performance, and
+  model-based control of continuous extrusion foaming.'
 orcid: 0000-0002-3453-2254
