@@ -18,6 +18,7 @@ never hand-edited.**
 | `publications.tex` | **no, generated** | The `\item` lines `cv.tex` inputs. |
 | `../_data/publications.yml` | **no, generated** | The site's publication list. |
 | `../_data/orcid.yml` | **no, generated** | ORCID biography, for the site's About Me. |
+| `scripts/fetch_orcid_profile.py` | yes | Fetches the biography and restores the markdown ORCID's plain-text field cannot hold. |
 
 ## How the sync works
 
@@ -65,9 +66,20 @@ Crossref entry and the old `manual.bib` entry have different keys, no collision
 fires, and both end up in the CV. `render.py` then warns that the new DOI is
 unclassified and drops it into the default section.
 
-None of that reaches `main` silently: it shows up in the sync PR as an added
-entry alongside the old one, plus an unclassified warning in the job log. Fix it
-in the PR, or before triggering the sync.
+None of that reaches `main` silently. Three things flag it:
+
+- `fetch_orcid.py` compares every Crossref-fetched title against the
+  `manual.bib` titles and reports anything above 85% similarity. The warning
+  goes to the job log **and** into the sync PR's own description, so it is
+  visible where you actually review.
+- The sync PR diff shows the new entry added alongside the old one.
+- `render.py` warns that the new DOI has no `overrides.yml` row.
+
+The similarity check only compares against `manual.bib` entries that could
+plausibly acquire a DOI (`@article`, `@inproceedings`, `@incollection`).
+Patents are excluded: Crossref does not index them, and the 2020
+microcapillary-films paper and its own PCT patent are 91% similar, so
+including `@misc` would warn on every sync forever.
 
 ### Preferred fix: let Crossref own the record
 
@@ -153,6 +165,31 @@ node -e 'console.log(require("bibtex-parse-js").toJSON(require("fs").readFileSyn
 
 Re-importing the file creates duplicates in ORCID. Import once, then edit in
 place.
+
+## The biography transforms
+
+ORCID stores the biography as plain text, so two things the site had before
+would be lost verbatim: the link to the lab, and the sentences that open the
+research-direction paragraphs and read as sub-headings.
+`fetch_orcid_profile.py` restores both. Neither transform adds, removes, or
+reorders a word.
+
+- **`AUTOLINKS`** turns a listed phrase into a markdown link, first occurrence
+  only, skipping any phrase that is already linked. Keep the list short and
+  specific.
+- **`emphasize_lead_in`** bolds a paragraph's opening sentence, but only when
+  all of: the paragraph continues after it; it is at most 80 characters; it is
+  at least 3 words; it contains exactly one period, its own terminator; it
+  contains no first-person pronoun; and the paragraph carries no markdown
+  emphasis already. The single-period and word-count rules together are what
+  stop a leading abbreviation such as "Prof. Chul B. Park." from being read as
+  a heading.
+
+Both are deliberately conservative: when a rule does not clearly apply, the
+text passes through untouched. Markdown you write in the ORCID biography
+yourself is never overwritten, so `**bolding a line**` there is the way to
+override the heuristic. Run `python3 cv/scripts/fetch_orcid_profile.py --raw`
+to see what ORCID returned before any transform.
 
 ## What is deliberately not synced
 
