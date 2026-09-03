@@ -11,6 +11,9 @@ Pipeline:
   3. Emit one BibTeX entry per DOI.
   4. Parse manual.bib and merge it on top by citation key -- manual.bib
      always wins on a key collision, so hand corrections survive reruns.
+     A manual.bib entry may also declare its own `doi` field once that
+     work appears on ORCID; such DOIs are skipped entirely in step 2 so
+     the same work never gets a second, separately-keyed entry.
   5. Print a diff summary against the previously committed publications.bib
      (added / removed / changed keys) and write the new file atomically.
 
@@ -329,11 +332,21 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
     if verbose:
         print(f"ORCID: found {len(dois)} work(s) with a DOI.")
 
+    manual_entries = load_manual_entries()
+    manual_dois = {
+        fields["doi"].strip().lower()
+        for _entry_type, fields in manual_entries.values()
+        if fields.get("doi", "").strip()
+    }
+
     fetched_keys: set[str] = set()
     generated: dict[str, str] = {}
     failures: list[str] = []
+    skipped_manual = [doi for doi in dois if doi in manual_dois]
 
     for doi in dois:
+        if doi in manual_dois:
+            continue
         try:
             message = fetch_crossref(doi, use_cache=use_cache)
             key, entry_type, fields = crossref_to_bibtex_entry(doi, message, fetched_keys)
@@ -350,7 +363,6 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
         print("publications.bib left untouched.", file=sys.stderr)
         return 1
 
-    manual_entries = load_manual_entries()
     merged: dict[str, str] = dict(generated)
     overridden = [k for k in manual_entries if k in generated]
     for key, (entry_type, fields) in manual_entries.items():
@@ -363,6 +375,10 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
 
     print(f"Fetched {len(generated)} entr{'y' if len(generated) == 1 else 'ies'} from ORCID/Crossref, "
           f"{len(manual_entries)} from manual.bib ({len(overridden)} override collision(s)).")
+    if skipped_manual:
+        print(f"Skipped {len(skipped_manual)} ORCID DOI(s) already claimed by a manual.bib entry:")
+        for doi in skipped_manual:
+            print(f"  - {doi}")
     print(f"Diff vs committed publications.bib: +{len(added)} added, -{len(removed)} removed, "
           f"~{len(changed)} changed.")
     for key in added:
