@@ -35,12 +35,16 @@ BOLD_NAME = ("Zhao", "Jianxiang")  # (family, given/initial family this matches)
 
 SECTION_ORDER = ["first_author", "coauthored", "conference", "patent", "thesis"]
 SECTION_TITLES = {
-    "first_author": "First-Authored Publications",
-    "coauthored": "Co-Authored Publications",
+    "first_author": "First-authored Publications",
+    "coauthored": "Co-authored Publications",
     "conference": "Conference Presentations",
     "patent": "Patents",
     "thesis": "Thesis",
 }
+# Sections the .docx puts at the top level rather than under "Publications".
+# These emit \section*{...}; everything else emits \pubgroup{...}, the
+# bold+underlined publication-group heading defined in cv.sty.
+TOP_LEVEL_SECTIONS = {"patent"}
 # Only these sections feed the site's public publication list, matching what
 # was already shown on jxzhao.com before this pipeline existed (conference
 # talks and patents are CV-only).
@@ -266,7 +270,8 @@ def render_tex(classified: list[dict[str, Any]]) -> str:
         "% Do not hand-edit. Source data: publications.bib + overrides.yml.",
         "% Every \\begin{pubcounter} resumes the SAME named counter series",
         "% (defined once in cv.sty), so numbering stays continuous across",
-        "% every section below, in the order they appear here.",
+        "% every group below, in the order they appear here -- including",
+        "% across the \\section*{Patents} break.",
         "",
     ]
     for section in SECTION_ORDER:
@@ -274,7 +279,9 @@ def render_tex(classified: list[dict[str, Any]]) -> str:
         if not items:
             continue
         items.sort(key=lambda c: c["sort"], reverse=True)
-        lines.append(f"\\subsection*{{{SECTION_TITLES[section]}}}")
+        heading = "section*" if section in TOP_LEVEL_SECTIONS else None
+        title = SECTION_TITLES[section]
+        lines.append(f"\\{heading}{{{title}}}" if heading else f"\\pubgroup{{{title}}}")
         lines.append("\\begin{pubcounter}")
         for item in items:
             citation = format_citation_tex(item["entry"], item["status"])
