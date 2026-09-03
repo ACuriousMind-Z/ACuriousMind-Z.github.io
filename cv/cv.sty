@@ -1,16 +1,22 @@
 % cv.sty -- styling for cv.tex
 % Kept separate so cv.tex stays readable. Hand-maintained.
+%
+% The target is the layout of CV2026_Jianxiang_Zhao_V4.docx (kept in this
+% directory as the reference): A4, 0.5in margins, Times New Roman 12pt,
+% left-aligned header block, and section headings that are bold + underlined
+% rather than a full-width rule. Numbers below that look arbitrary were read
+% out of that file's XML (page/margin geometry, run sizes, paragraph
+% alignment), not chosen by eye.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cv}[2026/01/01 CV styling]
 
-\RequirePackage[margin=0.85in]{geometry}
+\RequirePackage[a4paper,margin=0.5in]{geometry}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}
+\RequirePackage{mathptmx}   % Times-metric text font, matching the .docx
 \RequirePackage{titlesec}
 \RequirePackage{enumitem}
 \RequirePackage{xcolor}
 \RequirePackage{hyperref}
-\RequirePackage{parskip}
 
 % ---------------------------------------------------------------------------
 % Colours: dark, print-friendly link colour instead of bright blue.
@@ -27,16 +33,60 @@
 \urlstyle{same}
 
 % ---------------------------------------------------------------------------
-% Section headings
+% Heading underline.
+%
+% Word underlines the heading *text* (a rule the width of the run), not the
+% text block. The previous \titlerule spanned the full text width and was
+% pulled up by a negative \vspace, which is why it collided with the letters.
+% Here the rule is drawn at the depth of a descender-bearing reference box in
+% the current font plus 1pt, so it clears descenders (p, g, y) at any size and
+% sits at the same offset for every heading whether or not that heading
+% happens to contain one.
 % ---------------------------------------------------------------------------
-\titleformat{\section}
-  {\normalfont\Large\bfseries}{\thesection}{0em}{}
-  [\vspace{-0.4em}\titlerule]
-\titlespacing*{\section}{0pt}{1.1em}{0.5em}
+\newsavebox{\cvulbox}
+\newlength{\cvulwidth}
+\newlength{\cvuldepth}
+\newcommand{\cvunderline}[1]{%
+  \sbox{\cvulbox}{#1}%
+  \setlength{\cvulwidth}{\wd\cvulbox}%
+  \sbox0{gjpqy}%
+  \setlength{\cvuldepth}{\dp0}%
+  \addtolength{\cvuldepth}{1pt}%
+  \leavevmode
+  \rlap{\raisebox{-\cvuldepth}{\rule{\cvulwidth}{0.5pt}}}%
+  \usebox{\cvulbox}%
+}
 
-\titleformat{\subsection}
-  {\normalfont\large\bfseries}{\thesubsection}{0em}{}
-\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+% ---------------------------------------------------------------------------
+% Section headings: body-size bold, set in capitals as the .docx types them,
+% and underlined. Subsections are bold only -- except the
+% publication groups, which the .docx underlines as well; see \pubgroup.
+% ---------------------------------------------------------------------------
+% Vertical spacing below mirrors the .docx, where every paragraph has zero
+% space-before/space-after and the only gaps are the empty paragraphs the
+% author inserted -- which occur before top-level sections and before every
+% publication group except the first. Hence \parskip ~ 0 and one blank line
+% (\baselineskip) before those headings only.
+\newcommand{\cvsectiontitle}[1]{\cvunderline{\MakeUppercase{#1}}}
+\titleformat{\section}{\normalfont\bfseries}{}{0em}{\cvsectiontitle}
+% The 2pt after an underlined heading is not padding: the rule sits below
+% the descender line, deeper than a normal line box, and without it the
+% next line's ascenders run into it. Word reserves the same space inside
+% the heading's own line box.
+\titlespacing*{\section}{0pt}{1.0\baselineskip}{2pt}
+
+\titleformat{\subsection}{\normalfont\bfseries}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+% Publication-group heading: bold + underlined, used by publications.tex.
+% Preceded by a blank line, except directly after a section heading (where
+% titlesec leaves \@nobreak true), matching the .docx.
+\newcommand{\pubgroup}[1]{%
+  \par
+  \if@nobreak\else\addvspace{\baselineskip}\fi
+  {\bfseries\cvunderline{#1}}%
+  \par\nobreak\vspace{2pt}%
+}
 
 % Unnumbered sections/subsections (CVs don't number their headings).
 \setcounter{secnumdepth}{0}
@@ -54,27 +104,32 @@
 % resumes "pubcounter" or the compiler/reader can see it does not.
 % ---------------------------------------------------------------------------
 \newlist{pubcounter}{enumerate}{1}
-\setlist[pubcounter]{label=\arabic*., ref=\arabic*, leftmargin=1.8em,
-  itemsep=0.35em, topsep=0.2em, partopsep=0pt, parsep=0pt,
+\setlist[pubcounter]{label=\arabic*., ref=\arabic*, leftmargin=1.9em,
+  labelsep=0.4em, itemsep=0pt, topsep=0pt, partopsep=0pt, parsep=0pt,
   resume=pubcounter}
 
-% Generic list used for non-publication CV entries (education, mentoring, etc.)
-\setlist[itemize]{leftmargin=1.4em, itemsep=0.15em, topsep=0.2em, parsep=0pt}
+% Generic list used for non-publication CV entries.
+\setlist[itemize]{leftmargin=1.4em, itemsep=0pt, topsep=0pt, parsep=0pt}
 
 % ---------------------------------------------------------------------------
-% Header block helper
+% Header block: left-aligned, one field per line, as in the .docx.
+% #1 name (20pt bold), #2 subtitle, #3 a \\-separated block of contact lines.
 % ---------------------------------------------------------------------------
-\newcommand{\cvheader}[6]{%
-  \begin{center}
-    {\Huge\bfseries #1}\\[0.3em]
-    {\large #2}\\[0.6em]
-    #3\\
-    #4\\[0.3em]
-    #5 \quad\textbar\quad #6
-  \end{center}
+\newcommand{\cvheader}[3]{%
+  \begingroup
+  \raggedright
+  {\fontsize{20}{23}\selectfont\bfseries #1\par}
+  \vspace{0.1em}
+  {#2\par}
+  \vspace{0.7em}
+  \begin{tabular}{@{}l@{}}#3\end{tabular}
+  \par
+  \endgroup
+  \vspace{0.2em}%
 }
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.4pt}
 
 \endinput

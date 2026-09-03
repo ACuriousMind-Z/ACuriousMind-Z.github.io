@@ -1,7 +1,10 @@
 name: CV update
 
-# Keeps cv/publications.bib, cv/publications.tex, and _data/publications.yml
-# synchronized from ORCID/Crossref, and republishes the compiled CV PDF.
+# Keeps cv/publications.bib, cv/publications.tex, _data/publications.yml, and
+# _data/orcid.yml synchronized from ORCID/Crossref, and republishes the
+# compiled CV PDF. See cv/README.md for the data flow and the maintenance
+# runbooks (in particular, what to do when an in-preparation work is
+# published and acquires a DOI).
 #
 # This repo's GitHub Pages site is *not* built by a workflow in this repo
 # (there is no other file under .github/workflows/), so it uses GitHub's
@@ -24,7 +27,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Fetches ORCID/Crossref, regenerates the three tracked artifacts, and
+  # Fetches ORCID/Crossref, regenerates the four tracked artifacts, and
   # opens a PR if anything changed. Never commits to main directly, so a
   # human reviews what ORCID contributed before it reaches the CV or site.
   sync-publications:
@@ -45,6 +48,9 @@ jobs:
       - name: Fetch ORCID + Crossref
         run: python3 cv/scripts/fetch_orcid.py
 
+      - name: Fetch ORCID biography
+        run: python3 cv/scripts/fetch_orcid_profile.py
+
       - name: Render CV + site publication list
         run: python3 cv/scripts/render.py
 
@@ -57,15 +63,23 @@ jobs:
           title: "CV: sync publications from ORCID"
           body: |
             Automated sync from the ORCID public API + Crossref
-            (`cv/scripts/fetch_orcid.py` + `cv/scripts/render.py`).
+            (`cv/scripts/fetch_orcid.py`, `cv/scripts/fetch_orcid_profile.py`,
+            `cv/scripts/render.py`).
 
-            Review the diff below before merging -- entries new to ORCID
-            still need a `cv/overrides.yml` classification if the workflow
-            log warned about one.
+            Review the diff before merging:
+
+            - Entries new to ORCID need a `cv/overrides.yml` row, keyed by
+              **DOI**, if the workflow log warned that one is unclassified.
+            - A work that appears both here and in `cv/manual.bib` means an
+              in-preparation entry has been published. See the runbook in
+              `cv/README.md` before merging, or the CV will show it twice.
+            - A change to `_data/orcid.yml` rewrites the About Me text on
+              jxzhao.com.
           add-paths: |
             cv/publications.bib
             cv/publications.tex
             _data/publications.yml
+            _data/orcid.yml
 
   # Compiles cv.tex from whatever is already on main (i.e. previously
   # reviewed/merged content -- not the possibly-still-open PR above) and

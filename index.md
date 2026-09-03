@@ -4,6 +4,18 @@ layout: homepage
 
 ## About Me
 
+{% comment %}
+The biography below comes from the ORCID record via
+cv/scripts/fetch_orcid_profile.py -> _data/orcid.yml, so editing it at
+https://orcid.org/my-orcid updates this page on the next sync. The
+hand-written text is the fallback whenever ORCID has no public biography,
+and is also what to restore if you'd rather this page not track ORCID at
+all: keep it and drop the surrounding if/else/endif tags.
+{% endcomment %}
+{% assign orcid_bio = site.data.orcid.biography | default: "" | strip %}
+{% if orcid_bio != "" %}
+{{ orcid_bio | markdownify }}
+{% else %}
 I am a postdoctoral fellow in the Department of Mechanical and Industrial
 Engineering at the University of Toronto, working in the
 [Microcellular Plastics Manufacturing Laboratory](https://mpml.mie.utoronto.ca/lab/)
@@ -17,6 +29,7 @@ emission, heat transport, and mechanical response. Current work targets passive
 daytime radiative cooling (PDRC), shape-memory foams that adapt their insulation to
 ambient conditions, and solvent-free routes that scale to building envelope
 applications.
+{% endif %}
 
 ## Education
 
