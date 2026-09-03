@@ -36,6 +36,8 @@ plugins:
   - jekyll-sitemap
 url: "https://jxzhao.com"
 # The following files will be removed from the generated website.
+# NOTE: defining `exclude` overrides Jekyll's implicit defaults, so they are
+# re-listed explicitly below (Gemfile, Gemfile.lock, vendor/, node_modules/).
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -46,3 +48,6 @@ exclude:
   - LICENSE
   - minimal-light.gemspec
   - html_source_file/
+  - vendor/
+  - node_modules/
+  - cv/

@@ -1,0 +1,80 @@
+% cv.sty -- styling for cv.tex
+% Kept separate so cv.tex stays readable. Hand-maintained.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cv}[2026/01/01 CV styling]
+
+\RequirePackage[margin=0.85in]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{parskip}
+
+% ---------------------------------------------------------------------------
+% Colours: dark, print-friendly link colour instead of bright blue.
+% ---------------------------------------------------------------------------
+\definecolor{linkgray}{HTML}{1A3A5C}
+\hypersetup{
+  hidelinks,
+  colorlinks=true,
+  linkcolor=linkgray,
+  urlcolor=linkgray,
+  citecolor=linkgray,
+  pdfborder={0 0 0},
+}
+\urlstyle{same}
+
+% ---------------------------------------------------------------------------
+% Section headings
+% ---------------------------------------------------------------------------
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{0em}{}
+  [\vspace{-0.4em}\titlerule]
+\titlespacing*{\section}{0pt}{1.1em}{0.5em}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{0em}{}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+% Unnumbered sections/subsections (CVs don't number their headings).
+\setcounter{secnumdepth}{0}
+
+% ---------------------------------------------------------------------------
+% Shared, explicit numbering counter for the publication list.
+%
+% Every enumerate environment for publications/patents in publications.tex
+% opts into this single named series via enumitem's `resume=pubcounter`, so
+% numbering is continuous across the first-author, co-authored, conference,
+% and patent sections. Because the counter is one explicit, named object
+% (not separate per-section auto-numbering), a restart bug -- like the one
+% in the original .docx, where the co-author list silently restarted at 6
+% instead of continuing at 7 -- cannot happen silently: every list either
+% resumes "pubcounter" or the compiler/reader can see it does not.
+% ---------------------------------------------------------------------------
+\newlist{pubcounter}{enumerate}{1}
+\setlist[pubcounter]{label=\arabic*., ref=\arabic*, leftmargin=1.8em,
+  itemsep=0.35em, topsep=0.2em, partopsep=0pt, parsep=0pt,
+  resume=pubcounter}
+
+% Generic list used for non-publication CV entries (education, mentoring, etc.)
+\setlist[itemize]{leftmargin=1.4em, itemsep=0.15em, topsep=0.2em, parsep=0pt}
+
+% ---------------------------------------------------------------------------
+% Header block helper
+% ---------------------------------------------------------------------------
+\newcommand{\cvheader}[6]{%
+  \begin{center}
+    {\Huge\bfseries #1}\\[0.3em]
+    {\large #2}\\[0.6em]
+    #3\\
+    #4\\[0.3em]
+    #5 \quad\textbar\quad #6
+  \end{center}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\endinput
