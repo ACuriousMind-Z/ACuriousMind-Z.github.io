@@ -183,6 +183,16 @@ def _slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]", "", text)
 
 
+_CROSSREF_MARKUP_RE = re.compile(r"</?(?:i|b|em|strong|sub|sup|scp)\b[^>]*>", re.IGNORECASE)
+
+
+def clean_crossref_text(text: str) -> str:
+    """Strip inline JATS/HTML markup Crossref sometimes embeds in text fields
+    (e.g. "<i>via</i>") and collapse the whitespace/newlines left behind."""
+    text = _CROSSREF_MARKUP_RE.sub("", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def make_citation_key(family_name: str, year: str, journal: str, existing_keys: set[str]) -> str:
     base = f"{_slug(family_name) or 'anon'}{year or 'nd'}{_slug(journal)[:6]}"
     key = base
@@ -200,6 +210,8 @@ def crossref_authors_to_bibtex(authors: list[dict[str, Any]]) -> str:
         given = author.get("given", "").strip()
         if not family and not given:
             continue
+        family = clean_crossref_text(family)
+        given = clean_crossref_text(given)
         parts.append(f"{family}, {given}" if given else family)
     return " and ".join(parts)
 
@@ -210,7 +222,7 @@ def crossref_to_bibtex_entry(doi: str, message: dict[str, Any], existing_keys: s
     entry_type = CROSSREF_TYPE_TO_BIBTEX.get(cr_type, "misc")
 
     titles = message.get("title") or [""]
-    title = titles[0] if titles else ""
+    title = clean_crossref_text(titles[0] if titles else "")
 
     date_parts = (
         message.get("published-print", {}).get("date-parts")
@@ -225,7 +237,7 @@ def crossref_to_bibtex_entry(doi: str, message: dict[str, Any], existing_keys: s
     family_for_key = authors[0].get("family", "") if authors else ""
 
     container = message.get("container-title") or [""]
-    journal = container[0] if container else ""
+    journal = clean_crossref_text(container[0] if container else "")
 
     fields: dict[str, str] = {
         "title": title,
@@ -243,7 +255,7 @@ def crossref_to_bibtex_entry(doi: str, message: dict[str, Any], existing_keys: s
         fields["pages"] = message["page"]
     publisher = message.get("publisher")
     if publisher and entry_type != "article":
-        fields["publisher"] = publisher
+        fields["publisher"] = clean_crossref_text(publisher)
 
     key = make_citation_key(family_for_key, year, journal, existing_keys)
     return key, entry_type, fields
