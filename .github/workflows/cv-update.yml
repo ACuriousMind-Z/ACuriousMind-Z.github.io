@@ -54,6 +54,32 @@ jobs:
       - name: Render CV + site publication list
         run: python3 cv/scripts/render.py
 
+      # fetch_orcid.py writes cv/.cache/sync-report.md when it spots a
+      # Crossref entry that looks like an existing manual.bib entry -- the
+      # signature of an in-preparation work having been published. Folding it
+      # into the PR body puts the warning where the reviewer actually looks,
+      # rather than only in the job log.
+      - name: Compose PR body
+        run: |
+          cat > "$RUNNER_TEMP/pr-body.md" <<'PRBODY'
+          Automated sync from the ORCID public API + Crossref
+          (`cv/scripts/fetch_orcid.py`, `cv/scripts/fetch_orcid_profile.py`,
+          `cv/scripts/render.py`).
+
+          Review the diff before merging:
+
+          - Entries new to ORCID need a `cv/overrides.yml` row, keyed by
+            **DOI**, if the workflow log warned that one is unclassified.
+          - A change to `_data/orcid.yml` rewrites the About Me text on
+            jxzhao.com.
+          PRBODY
+          if [ -s cv/.cache/sync-report.md ]; then
+            printf '\n' >> "$RUNNER_TEMP/pr-body.md"
+            cat cv/.cache/sync-report.md >> "$RUNNER_TEMP/pr-body.md"
+          fi
+          echo "--- composed PR body ---"
+          cat "$RUNNER_TEMP/pr-body.md"
+
       - name: Open PR with any changes
         uses: peter-evans/create-pull-request@v6
         with:
@@ -61,20 +87,7 @@ jobs:
           branch: cv/orcid-sync
           delete-branch: true
           title: "CV: sync publications from ORCID"
-          body: |
-            Automated sync from the ORCID public API + Crossref
-            (`cv/scripts/fetch_orcid.py`, `cv/scripts/fetch_orcid_profile.py`,
-            `cv/scripts/render.py`).
-
-            Review the diff before merging:
-
-            - Entries new to ORCID need a `cv/overrides.yml` row, keyed by
-              **DOI**, if the workflow log warned that one is unclassified.
-            - A work that appears both here and in `cv/manual.bib` means an
-              in-preparation entry has been published. See the runbook in
-              `cv/README.md` before merging, or the CV will show it twice.
-            - A change to `_data/orcid.yml` rewrites the About Me text on
-              jxzhao.com.
+          body-path: ${{ runner.temp }}/pr-body.md
           add-paths: |
             cv/publications.bib
             cv/publications.tex

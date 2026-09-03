@@ -14,7 +14,12 @@ Pipeline:
      A manual.bib entry may also declare its own `doi` field once that
      work appears on ORCID; such DOIs are skipped entirely in step 2 so
      the same work never gets a second, separately-keyed entry.
-  5. Print a diff summary against the previously committed publications.bib
+  5. Flag any generated entry whose title closely matches a manual.bib
+     entry. That is the signature of a work that used to have no DOI and
+     has since been published: the DOI-based skip in step 4 cannot catch
+     it, and the by-key merge lets both copies through. See the runbook in
+     cv/README.md.
+  6. Print a diff summary against the previously committed publications.bib
      (added / removed / changed keys) and write the new file atomically.
 
 If ORCID is unreachable, or any step fails, this script exits non-zero
@@ -37,6 +42,7 @@ import re
 import sys
 import time
 import unicodedata
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
@@ -58,6 +64,9 @@ CV_DIR = Path(__file__).resolve().parent.parent
 CACHE_DIR = CV_DIR / ".cache"
 MANUAL_BIB = CV_DIR / "manual.bib"
 OUTPUT_BIB = CV_DIR / "publications.bib"
+# Machine-readable warnings for the workflow to fold into the sync PR body.
+# Under .cache/, which is gitignored.
+SYNC_REPORT = CACHE_DIR / "sync-report.md"
 
 REQUEST_TIMEOUT = 20
 MAX_RETRIES = 5
@@ -283,6 +292,79 @@ def format_bibtex_entry(key: str, entry_type: str, fields: dict[str, str]) -> st
 
 
 # ---------------------------------------------------------------------------
+# Duplicate detection
+# ---------------------------------------------------------------------------
+
+# Above this title similarity, a generated entry and a manual.bib entry are
+# reported as probably the same work. Tuned to be noisy rather than silent: a
+# false positive costs one glance at the PR, a false negative puts a duplicate
+# publication in the CV and on the site.
+TITLE_MATCH_THRESHOLD = 0.85
+
+# Only manual.bib entries of these types are compared. The risk being detected
+# is a manual entry that later acquires a DOI, and Crossref indexes journal
+# articles, proceedings papers and book chapters -- not patents, which are what
+# @misc holds here. Excluding @misc is also what keeps the standing 91% match
+# between the 2020 microcapillary-films paper and its own PCT patent, two
+# legitimately separate CV entries, from warning on every single sync.
+DUPLICATE_CHECK_TYPES = {"article", "inproceedings", "incollection"}
+
+
+def normalize_title(title: str) -> str:
+    return " ".join(re.sub(r"[^a-z0-9 ]", " ", _strip_accents(title).lower()).split())
+
+
+def find_probable_duplicates(
+    generated_titles: dict[str, tuple[str, str]],
+    manual_entries: dict[str, tuple[str, dict[str, str]]],
+) -> list[tuple[str, str, str, str, float]]:
+    """Return (generated_key, doi, generated_title, manual_key, ratio) for every
+    Crossref-generated entry that looks like an existing manual.bib entry.
+
+    Compares normalized titles rather than DOIs on purpose: an entry that shares
+    a DOI with manual.bib was already skipped upstream, so the case left to
+    catch is exactly the one with no DOI on the manual side.
+    """
+    manual_titles = {
+        key: normalize_title(fields.get("title", ""))
+        for key, (entry_type, fields) in manual_entries.items()
+        if fields.get("title", "").strip() and entry_type in DUPLICATE_CHECK_TYPES
+    }
+    hits = []
+    for gen_key, (doi, title) in generated_titles.items():
+        norm = normalize_title(title)
+        if not norm:
+            continue
+        for man_key, man_norm in manual_titles.items():
+            if not man_norm:
+                continue
+            ratio = SequenceMatcher(None, norm, man_norm).ratio()
+            if ratio >= TITLE_MATCH_THRESHOLD:
+                hits.append((gen_key, doi, title, man_key, ratio))
+    hits.sort(key=lambda h: h[4], reverse=True)
+    return hits
+
+
+def format_duplicate_report(hits: list[tuple[str, str, str, str, float]]) -> str:
+    lines = [
+        "### Possible duplicate publications",
+        "",
+        "A Crossref entry fetched from ORCID closely matches an entry that is "
+        "still in `cv/manual.bib`. That normally means a work with no DOI has "
+        "been published and now has one, so the CV and the site would list it "
+        "twice. Fix it before merging: see "
+        "\"Runbook: an in-preparation item gets published\" in `cv/README.md`.",
+        "",
+    ]
+    for gen_key, doi, title, man_key, ratio in hits:
+        lines.append(f"- **{title}**")
+        lines.append(f"  - from ORCID as `{gen_key}` (DOI `{doi}`)")
+        lines.append(f"  - matches `cv/manual.bib` entry `{man_key}` "
+                     f"({ratio:.0%} title similarity)")
+    return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
 # manual.bib merge
 # ---------------------------------------------------------------------------
 
@@ -341,6 +423,7 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
 
     fetched_keys: set[str] = set()
     generated: dict[str, str] = {}
+    generated_titles: dict[str, tuple[str, str]] = {}
     failures: list[str] = []
     skipped_manual = [doi for doi in dois if doi in manual_dois]
 
@@ -355,6 +438,7 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
             continue
         fetched_keys.add(key)
         generated[key] = format_bibtex_entry(key, entry_type, fields)
+        generated_titles[key] = (doi, fields.get("title", ""))
 
     if failures:
         print("error: Crossref lookups failed for:", file=sys.stderr)
@@ -379,6 +463,24 @@ def build(dry_run: bool, use_cache: bool, verbose: bool = True) -> int:
         print(f"Skipped {len(skipped_manual)} ORCID DOI(s) already claimed by a manual.bib entry:")
         for doi in skipped_manual:
             print(f"  - {doi}")
+
+    duplicates = find_probable_duplicates(generated_titles, manual_entries)
+    if duplicates:
+        print("", file=sys.stderr)
+        print(f"WARNING: {len(duplicates)} possible duplicate(s) -- a Crossref entry "
+              "closely matches a manual.bib entry:", file=sys.stderr)
+        for gen_key, doi, title, man_key, ratio in duplicates:
+            print(f"  - {gen_key} ({doi}) ~ manual.bib {man_key} "
+                  f"[{ratio:.0%} title match]", file=sys.stderr)
+            print(f"      {title}", file=sys.stderr)
+        print("  This is what an in-preparation entry getting published looks like. "
+              "See the runbook in cv/README.md before merging.", file=sys.stderr)
+        print("", file=sys.stderr)
+
+    if not dry_run:
+        SYNC_REPORT.parent.mkdir(parents=True, exist_ok=True)
+        SYNC_REPORT.write_text(format_duplicate_report(duplicates) if duplicates else "",
+                               encoding="utf-8")
     print(f"Diff vs committed publications.bib: +{len(added)} added, -{len(removed)} removed, "
           f"~{len(changed)} changed.")
     for key in added:
