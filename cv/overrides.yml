@@ -92,7 +92,7 @@ entries:
     conference_short: "Polymers"
     pdf: "https://www.mdpi.com/2073-4360/16/3/380"
     sort: 2024.3
-  su2023bookchapter:
+  10.1002/9781119535775.ch6:
     section: coauthored
     conference_short: "Book Chapter"
     sort: 2023.1
@@ -104,7 +104,7 @@ entries:
     section: coauthored
     conference_short: "J. Appl. Polym. Sci."
     sort: 2020.9
-  huang2020pptm:
+  10.1080/25740881.2019.1708104:
     section: coauthored
     conference_short: "Polym.-Plast. Technol. Mater."
     sort: 2020.8
