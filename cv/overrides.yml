@@ -1,0 +1,137 @@
+# overrides.yml -- hand-maintained.
+#
+# Classifies every citation key in publications.bib (keyed by DOI where the
+# entry has one, otherwise by its manual.bib citation key) into a CV
+# section, an optional status label, and a sort value used to order entries
+# within a section (higher sorts first). Anything in publications.bib that
+# is NOT listed here falls back to `defaults` and render.py will print a
+# warning so new ORCID entries get classified instead of silently
+# defaulting.
+#
+# Sections: first_author, coauthored, conference, patent, thesis.
+#
+# `site: false` keeps an entry out of _data/publications.yml (the site's
+# public publication list) while still including it in the CV -- used here
+# for the three not-yet-submitted manuscripts, matching how they were
+# already commented out of _data/publications.yml before this pipeline
+# existed. Omit `site` (or set it true) to show the entry on both.
+#
+# `conference_short` and `pdf` are optional site-only fields (see
+# _includes/publications.md) that ORCID/Crossref cannot supply reliably;
+# set them here per entry to control the badge text and PDF link.
+
+defaults:
+  section: coauthored
+  site: true
+
+entries:
+  # --- First-authored ------------------------------------------------------
+  zhaoinprepadfm:
+    section: first_author
+    status: "To be submitted"
+    site: false
+    sort: 2027.0
+  zhao2026acsami:
+    section: first_author
+    status: "Under review"
+    conference_short: "ACS AMI"
+    sort: 2026.5
+  10.1002/smll.202508472:
+    section: first_author
+    conference_short: "Small"
+    pdf: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12508713/"
+    sort: 2025.9
+  10.1016/j.nanoen.2024.109695:
+    section: first_author
+    conference_short: "Nano Energy"
+    pdf: "https://www.sciencedirect.com/science/article/pii/S2211285524004439"
+    sort: 2024.6
+  10.1007/s10853-021-06259-5:
+    section: first_author
+    conference_short: "J. Mater. Sci."
+    sort: 2021.5
+  10.1002/mame.201900768:
+    section: first_author
+    conference_short: "Macromol. Mater. Eng."
+    sort: 2020.3
+
+  # --- Co-authored -----------------------------------------------------------
+  braga2026eaai:
+    section: coauthored
+    status: "Under review"
+    conference_short: "EAAI"
+    sort: 2026.7
+  10.1016/j.cej.2026.174935:
+    section: coauthored
+    conference_short: "Chem. Eng. J."
+    sort: 2026.6
+  10.1007/s42114-026-01732-8:
+    section: coauthored
+    conference_short: "Adv. Compos. Hybrid Mater."
+    sort: 2026.5
+  faysal2025ppsamericas:
+    section: coauthored
+    conference_short: "PPS Americas"
+    sort: 2025.8
+  faysalinprepsmt:
+    section: coauthored
+    status: "To be submitted"
+    site: false
+    sort: 2025.7
+  leeinprepafm:
+    section: coauthored
+    status: "To be submitted"
+    site: false
+    sort: 2025.6
+  10.1039/d4ta00315b:
+    section: coauthored
+    conference_short: "J. Mater. Chem. A"
+    sort: 2024.4
+  10.3390/polym16030380:
+    section: coauthored
+    conference_short: "Polymers"
+    pdf: "https://www.mdpi.com/2073-4360/16/3/380"
+    sort: 2024.3
+  su2023bookchapter:
+    section: coauthored
+    conference_short: "Book Chapter"
+    sort: 2023.1
+  10.1002/mame.202100499:
+    section: coauthored
+    conference_short: "Macromol. Mater. Eng."
+    sort: 2021.9
+  10.1002/app.49352:
+    section: coauthored
+    conference_short: "J. Appl. Polym. Sci."
+    sort: 2020.9
+  huang2020pptm:
+    section: coauthored
+    conference_short: "Polym.-Plast. Technol. Mater."
+    sort: 2020.8
+  10.1039/c8ra06837b:
+    section: coauthored
+    conference_short: "RSC Adv."
+    pdf: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9086337/"
+    sort: 2018.1
+
+  # --- Conference presentations ----------------------------------------------
+  zhao2025antec:
+    section: conference
+    sort: 2025.3
+  zhao2024antec:
+    section: conference
+    sort: 2024.3
+  zhao2023antec:
+    section: conference
+    sort: 2023.3
+  zhao2022pps37:
+    section: conference
+    sort: 2022.4
+
+  # --- Patents -----------------------------------------------------------
+  zhaopatentcn110253856a:
+    section: patent
+    sort: 2019.6
+  zhaopatentpct2019096518:
+    section: patent
+    sort: 2019.5

@@ -1,0 +1,96 @@
+name: CV update
+
+# Keeps cv/publications.bib, cv/publications.tex, and _data/publications.yml
+# synchronized from ORCID/Crossref, and republishes the compiled CV PDF.
+#
+# This repo's GitHub Pages site is *not* built by a workflow in this repo
+# (there is no other file under .github/workflows/), so it uses GitHub's
+# classic "deploy from a branch" Pages build, which is triggered by GitHub
+# itself on every push to the Pages source branch and is entirely separate
+# from Actions. Nothing here can race or interfere with it. The push
+# trigger below is scoped to cv/** so unrelated commits don't run this
+# workflow at all.
+on:
+  schedule:
+    - cron: "0 6 * * 1" # weekly, Monday 06:00 UTC
+  push:
+    branches: [main]
+    paths:
+      - "cv/**"
+  workflow_dispatch: {}
+
+concurrency:
+  group: cv-update
+  cancel-in-progress: false
+
+jobs:
+  # Fetches ORCID/Crossref, regenerates the three tracked artifacts, and
+  # opens a PR if anything changed. Never commits to main directly, so a
+  # human reviews what ORCID contributed before it reaches the CV or site.
+  sync-publications:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r cv/requirements.txt
+
+      - name: Fetch ORCID + Crossref
+        run: python3 cv/scripts/fetch_orcid.py
+
+      - name: Render CV + site publication list
+        run: python3 cv/scripts/render.py
+
+      - name: Open PR with any changes
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "cv: sync publications from ORCID/Crossref"
+          branch: cv/orcid-sync
+          delete-branch: true
+          title: "CV: sync publications from ORCID"
+          body: |
+            Automated sync from the ORCID public API + Crossref
+            (`cv/scripts/fetch_orcid.py` + `cv/scripts/render.py`).
+
+            Review the diff below before merging -- entries new to ORCID
+            still need a `cv/overrides.yml` classification if the workflow
+            log warned about one.
+          add-paths: |
+            cv/publications.bib
+            cv/publications.tex
+            _data/publications.yml
+
+  # Compiles cv.tex from whatever is already on main (i.e. previously
+  # reviewed/merged content -- not the possibly-still-open PR above) and
+  # publishes it as a release asset at a stable URL.
+  build-and-release-pdf:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended \
+            texlive-latex-extra texlive-fonts-recommended latexmk
+
+      - name: Compile CV PDF
+        run: make -C cv pdf
+
+      - name: Publish cv.pdf as a release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: cv-latest
+          name: "Latest CV"
+          body: "Automatically rebuilt from cv/cv.tex on every push to cv/** (and weekly). Stable download link -- always the current cv.pdf."
+          files: cv/cv.pdf
